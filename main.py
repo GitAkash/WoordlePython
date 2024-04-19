@@ -4,12 +4,7 @@ words = open('wordlist2.txt').read().splitlines()
 generated_word = random.choice(words)
 word_check = []
 correct_letters = ['.', '.', '.', '.', '.']
-
-
-def word_to_list(generated_word):
-    for letter in generated_word:
-        word_check.append(letter)
-
+wrong_letters = set()
 
 def get_user_input():
     guess = input("Enter your word: ")
@@ -36,12 +31,13 @@ def check_user_input(guess):
         elif guess[i] in generated_word and generated_word.count(guess[i]) >= guess.count(guess[i]):
             wrong_pos.append(guess[i])
         else:
-            print(f"{guess[i]} is niet in het woord")
+            wrong_letters.add(guess[i])
         i += 1
 
-    print(empty_word, wrong_pos)
-    print(correct_letters)
+    print(f"Goede Letters (Ronde): \t \t \t Verkeerde Positie:")
+    print(f" {empty_word} \t\t  {wrong_pos}")
+    print(f"Goede Letters (Totaal): \t \t Foute Letters (Totaal):")
+    print(f" {correct_letters} \t\t  {wrong_letters}")
     get_user_input()
 
-print(generated_word)
 get_user_input()
