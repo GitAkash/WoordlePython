@@ -1,8 +1,7 @@
 import random
 
 words = open('wordlist2.txt').read().splitlines()
-# chosen_word = random.choice(words)
-chosen_word = 'raden'
+chosen_word = random.choice(words)
 word_check = []
 
 
@@ -12,30 +11,35 @@ def word_to_list(chosen_word):
 
 
 def get_user_input():
-    user_input = input("Enter your word: ")
-    if user_input not in words:
+    guess = input("Enter your word: ")
+    if guess not in words:
         print("That's not a valid word, retry.")
         return get_user_input()
     else:
-        check_user_input(user_input)
+        check_user_input(guess)
 
 
-def check_user_input(user_input):
-    if user_input == chosen_word:
+def check_user_input(guess):
+    empty_word = ['.','.','.','.','.']
+    guessed_letters = []
+    wrong_pos = []
+    i = 0
+
+    if guess == chosen_word:
         return print("That's correct.")
 
-    i = 0
     while i < len(chosen_word):
-        if chosen_word[i] == user_input[i]:
-            print(f"{user_input[i]} is in de juiste positie!")
-
-        elif chosen_word[i] in chosen_word:
-            print(f"{user_input[i]} is in het woord, maar niet de juiste positie!")
-
+        if chosen_word[i] == guess[i]:
+            # print(f"{guess[i]} is in de juiste positie!")
+            empty_word[i] = chosen_word[i]
+            guessed_letters.append(chosen_word[i])
+        elif guess[i] in chosen_word and chosen_word.count(guess[i]) >= guess.count(guess[i]):
+            # print(f"{guess[i]} is in het woord, maar niet de juiste positie!")
+            wrong_pos.append(guess[i])
         else:
-            print(f"{user_input[i]} is niet in het woord")
+            print(f"{guess[i]} is niet in het woord")
         i += 1
+    print(empty_word, wrong_pos)
+    get_user_input()
 
-
-print(chosen_word)
 get_user_input()
